@@ -7,8 +7,8 @@ function LoginPage() {
       <h2>Yuk, login untuk menggunakan aplikasi.</h2>
 
       <div className='input-login'>
-        <Input id='email' type='email' title='Email' />
-        <Input id='password' type='password' title='Password' />
+        <Input id='email' type='email' label='Email' />
+        <Input id='password' type='password' label='Password' />
         <button type='button'>Login</button>
       </div>
 
