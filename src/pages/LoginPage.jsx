@@ -1,4 +1,5 @@
 import React from 'react'
+import Input from '../components/Input'
 
 function LoginPage() {
   return (
@@ -6,12 +7,8 @@ function LoginPage() {
       <h2>Yuk, login untuk menggunakan aplikasi.</h2>
 
       <div className='input-login'>
-        <label htmlFor='email'>Email</label>
-        <input type='email' id='email' />
-
-        <label htmlFor='password'>Password</label>
-        <input type='password' id='password' />
-
+        <Input id='email' type='email' title='Email' />
+        <Input id='password' type='password' title='Password' />
         <button type='button'>Login</button>
       </div>
 
