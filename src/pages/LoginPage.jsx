@@ -4,17 +4,16 @@ import useInputChange from "../hooks/useInputChange";
 import { login, putAccessToken } from "../utils/network-data";
 import { useNavigate } from "react-router-dom";
 
-function LoginPage() {
+function LoginPage({ loginSuccess }) {
   const [email, handleEmailChange] = useInputChange("");
   const [password, handlePasswordChange] = useInputChange("");
-  const navigate = useNavigate();
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     const { data } = await login({ email, password });
     if (data?.accessToken) {
-      putAccessToken(data?.accessToken);
-      navigate("/notes");
+      putAccessToken(data.accessToken);
+      loginSuccess(data.accessToken)
     }
   };
 
