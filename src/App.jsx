@@ -1,41 +1,69 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import MainContainer from "./layouts/MainContainer";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import { getAccessToken } from "./utils/network-data";
-
-const AccessTokenContext = React.createContext();
+import NotesPage from "./pages/NotesPage";
+import UserContext from "./context/UserContext";
+import { getAccessToken, getUserLogged } from "./utils/network-data";
 
 function App() {
-  const [accessToken, setAccessToken] = useState(getAccessToken());
+  const [user, setUser] = useState();
+  const [initializing, setInitializing] = useState(false);
 
-  const onLoginSuccess = (newAccessToken) => setAccessToken(newAccessToken);
+  useEffect(() => {
+    const accessToken = getAccessToken();
+    if (accessToken) {
+      onLoginSuccess();
+    }
+    setInitializing(true);
+  }, []);
 
-  const accessTokenContextValue = useMemo(() => {
-    return { accessToken };
-  }, [accessToken]);
+  const onLoginSuccess = async () => {
+    const { data } = await getUserLogged();
+    setUser(data);
+  };
 
-  if (accessToken) {
+  const onLogout = () => {
+    localStorage.clear();
+    setUser(null);
+  };
+
+  const userContextValue = useMemo(() => {
+    return { onLogout, user };
+  }, [user]);
+
+  const renderRouting = () => {
+    if (!initializing) {
+      return;
+    }
+
+    if (user) {
+      return (
+        <>
+          <Route path="/" element={<NotesPage />} />
+          <Route path="/archives" element={<h1>Catatan Archive</h1>} />
+          <Route path="/detail/:id" element={<h1>Detail Page</h1>} />
+        </>
+      );
+    }
+
     return (
-      <AccessTokenContext.Provider value={accessTokenContextValue}>
-        <Routes>
-          <Route path="/" element={<MainContainer />}>
-            <Route path="/" element={<h1>Catatan Active</h1>} />
-            <Route path="/archives" element={<h1>Catatan Archive</h1>} />
-          </Route>
-        </Routes>
-      </AccessTokenContext.Provider>
-    );
-  }
-
-  return (
-    <Routes>
-      <Route path="/" element={<MainContainer />}>
+      <>
         <Route path="/" element={<LoginPage loginSuccess={onLoginSuccess} />} />
         <Route path="/register" element={<RegisterPage />} />
-      </Route>
-    </Routes>
+      </>
+    );
+  };
+
+  return (
+    <UserContext.Provider value={userContextValue}>
+      <Routes>
+        <Route path="/" element={<MainContainer />}>
+          {renderRouting()}
+        </Route>
+      </Routes>
+    </UserContext.Provider>
   );
 }
 
