@@ -7,6 +7,7 @@ function NotesList({ notes }) {
     <section className="notes-list">
       {notes.map((note) => (
         <NoteItem
+          key={note.id}
           id={note.id}
           title={note.title}
           createdAt={note.createdAt}
@@ -18,7 +19,7 @@ function NotesList({ notes }) {
 }
 
 NotesList.propTypes = {
-  note: PropTypes.array.isRequired,
+  notes: PropTypes.array.isRequired,
 };
 
 export default NotesList;
