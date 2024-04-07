@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { showFormattedDate } from "../utils";
-import { getNote } from "../utils/network-data";
+import { archiveNote, deleteNote, getNote } from "../utils/network-data";
 import FloatButton from "../components/FloatButton";
 import {
   MdOutlineArchive as ArchiveIcon,
@@ -11,6 +11,7 @@ import {
 function DetailPage() {
   const { id } = useParams();
   const [note, setNote] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getNoteAsync = async () => {
@@ -26,6 +27,28 @@ function DetailPage() {
     getNoteAsync();
   }, [id]);
 
+  const handleArchiveClick = async () => {
+    try {
+      const { error } = await archiveNote(id);
+      if (!error) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Error while fetching note:", error);
+    }
+  };
+
+  const handleDeleteClick = async () => {
+    try {
+      const { error } = await deleteNote(id);
+      if (!error) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Error while fetching note:", error);
+    }
+  };
+
   return (
     <section className="detail-page">
       {note ? (
@@ -35,9 +58,14 @@ function DetailPage() {
             {showFormattedDate(note?.createdAt)}
           </p>
           <div className="detail-page__body">{note?.body}</div>
+
           <div className="detail-page__action">
-            <FloatButton title="Arsipkan"><ArchiveIcon /></FloatButton>
-            <FloatButton title="Hapus"><DeleteIcon /></FloatButton>
+            <FloatButton title="Arsipkan" onClick={handleArchiveClick}>
+              <ArchiveIcon />
+            </FloatButton>
+            <FloatButton title="Hapus" onClick={handleDeleteClick}>
+              <DeleteIcon />
+            </FloatButton>
           </div>
         </>
       ) : (

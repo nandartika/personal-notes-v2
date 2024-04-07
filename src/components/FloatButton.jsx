@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function FloatButton({ children, title }) {
+function FloatButton({ children, title, onClick }) {
   return (
-    <button className="action" type="button" title={title}>
+    <button className="action" type="button" title={title} onClick={onClick}>
       {children}
     </button>
   );
@@ -12,6 +12,7 @@ function FloatButton({ children, title }) {
 FloatButton.propTypes = {
   children: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default FloatButton;
