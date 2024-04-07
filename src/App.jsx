@@ -12,16 +12,21 @@ function App() {
   const [initializing, setInitializing] = useState(false);
 
   useEffect(() => {
-    const accessToken = getAccessToken();
-    if (accessToken) {
-      onLoginSuccess();
-    }
-    setInitializing(true);
+    const isLogin = async () => {
+      const accessToken = getAccessToken();
+      if (accessToken) {
+        await onLoginSuccess();
+      }
+      setInitializing(true);
+    };
+
+    isLogin();
   }, []);
 
   const onLoginSuccess = async () => {
     const { data } = await getUserLogged();
     setUser(data);
+    return;
   };
 
   const onLogout = () => {

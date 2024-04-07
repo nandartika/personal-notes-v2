@@ -1,12 +1,14 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { MdGTranslate } from "react-icons/md";
-import { FiMoon } from "react-icons/fi";
+import { FiMoon as Moon, FiSun as Sun } from "react-icons/fi";
 import { RiLoginBoxLine } from "react-icons/ri";
 import UserContext from "../context/UserContext";
 
-function NavigationApp() {
+function NavigationApp({ theme, handleThemeClick }) {
   const { onLogout, user } = React.useContext(UserContext);
-  
+
   return (
     <header>
       <h1>
@@ -25,8 +27,8 @@ function NavigationApp() {
         <MdGTranslate />
       </button>
 
-      <button className="toggle-theme" type="button">
-        <FiMoon />
+      <button className="toggle-theme" type="button" onClick={handleThemeClick}>
+        {theme === "light" ? <Moon /> : <Sun />}
       </button>
 
       {user && (
@@ -38,5 +40,10 @@ function NavigationApp() {
     </header>
   );
 }
+
+NavigationApp.propTypes = {
+  theme: PropTypes.oneOf(["light", "dark"]).isRequired,
+  handleThemeClick: PropTypes.func.isRequired,
+};
 
 export default NavigationApp;
