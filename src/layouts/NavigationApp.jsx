@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { MdGTranslate } from "react-icons/md";
-import { FiMoon as Moon, FiSun as Sun } from "react-icons/fi";
-import { RiLoginBoxLine } from "react-icons/ri";
+import { MdGTranslate as TranslateIcon } from "react-icons/md";
+import { FiMoon as MoonIcon, FiSun as SunIcon } from "react-icons/fi";
+import { RiLoginBoxLine as LogoutIcon } from "react-icons/ri";
 import UserContext from "../context/UserContext";
 
 function NavigationApp({ theme, handleThemeClick }) {
@@ -24,16 +24,16 @@ function NavigationApp({ theme, handleThemeClick }) {
       </nav>
 
       <button className="toggle-locale" type="button">
-        <MdGTranslate />
+        <TranslateIcon />
       </button>
 
       <button className="toggle-theme" type="button" onClick={handleThemeClick}>
-        {theme === "light" ? <Moon /> : <Sun />}
+        {theme === "light" ? <MoonIcon /> : <SunIcon />}
       </button>
 
       {user && (
         <button className="button-logout" type="button" onClick={onLogout}>
-          <RiLoginBoxLine />
+          <LogoutIcon />
           {user.name}
         </button>
       )}
