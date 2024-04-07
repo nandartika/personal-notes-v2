@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getActiveNotes } from "../utils/network-data";
 import NotesList from "../components/NotesList";
 import { useParams } from "react-router-dom";
+import FloatButton from "../components/FloatButton";
+import { FiPlus as PlusIcon } from "react-icons/fi";
 
 function NotesPage() {
   const { type } = useParams();
@@ -27,7 +29,9 @@ function NotesPage() {
       {notes && <NotesList notes={notes} />}
 
       <section className="homepage__action">
-        <button className="action" type="button" title="Tambah"></button>
+        <FloatButton title="Tambah">
+          <PlusIcon />
+        </FloatButton>
       </section>
     </section>
   );
