@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { getActiveNotes } from "../utils/network-data";
-import NotesList from "../components/NotesList";
 import { useParams } from "react-router-dom";
+import { getActiveNotes } from "../utils/network-data";
+
+import NotesList from "../components/NotesList";
+import Input from "../components/Input";
 import FloatButton from "../components/FloatButton";
 import { FiPlus as PlusIcon } from "react-icons/fi";
 
@@ -23,7 +25,7 @@ function NotesPage() {
       <h2>Catatan Active</h2>
 
       <section className="search-bar">
-        <input type="text" placeholder="Cari berdasarkan judul ..." />
+        <Input placeholder="Cari berdasarkan judul ..." />
       </section>
 
       {notes && <NotesList notes={notes} />}
