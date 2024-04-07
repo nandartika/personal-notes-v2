@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function Input(props) {
+function InputLabel(props) {
   const { id, type, label, value, onChange } = props;
 
   return (
@@ -18,7 +18,7 @@ function Input(props) {
   );
 }
 
-Input.propTypes = {
+InputLabel.propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
@@ -26,4 +26,4 @@ Input.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-export default Input;
+export default InputLabel;

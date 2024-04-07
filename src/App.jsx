@@ -47,7 +47,7 @@ function App() {
       return (
         <>
           <Route path="/" element={<NotesPage />} />
-          <Route path="/archives" element={<h1>Catatan Archive</h1>} />
+          <Route path="/archives" element={<NotesPage />} />
           <Route path="/detail/:id" element={<h1>Detail Page</h1>} />
         </>
       );

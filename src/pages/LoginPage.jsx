@@ -1,8 +1,7 @@
 import React from "react";
-import Input from "../components/Input";
 import useInputChange from "../hooks/useInputChange";
 import { login, putAccessToken } from "../utils/network-data";
-import { useNavigate } from "react-router-dom";
+import InputLabel from "../components/InputLabel";
 
 function LoginPage({ loginSuccess }) {
   const [email, handleEmailChange] = useInputChange("");
@@ -22,14 +21,14 @@ function LoginPage({ loginSuccess }) {
       <h2>Yuk, login untuk menggunakan aplikasi.</h2>
 
       <form className="input-login" onSubmit={onSubmitHandler}>
-        <Input
+        <InputLabel
           id="email"
           type="email"
           label="Email"
           value={email}
           onChange={handleEmailChange}
         />
-        <Input
+        <InputLabel
           id="password"
           type="password"
           label="Password"

@@ -1,8 +1,8 @@
 import React from "react";
-import Input from "../components/Input";
 import useInputChange from "../hooks/useInputChange";
 import { register } from "../utils/network-data";
 import { useNavigate } from "react-router-dom";
+import InputLabel from "../components/InputLabel";
 
 function RegisterPage() {
   const [name, handleNameChange] = useInputChange("");
@@ -29,28 +29,28 @@ function RegisterPage() {
       <h2>Isi form untuk mendaftar akun</h2>
 
       <form className="input-register" onSubmit={onSubmitHandler}>
-        <Input
+        <InputLabel
           id="name"
           type="text"
           label="Name"
           value={name}
           onChange={handleNameChange}
         />
-        <Input
+        <InputLabel
           id="email"
           type="email"
           label="Email"
           value={email}
           onChange={handleEmailChange}
         />
-        <Input
+        <InputLabel
           id="password"
           type="password"
           label="Password"
           value={password}
           onChange={handlePasswordChange}
         />
-        <Input
+        <InputLabel
           id="confirmPassword"
           type="password"
           label="confirmPassword"
