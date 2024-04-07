@@ -6,6 +6,7 @@ import RegisterPage from "./pages/RegisterPage";
 import NotesPage from "./pages/NotesPage";
 import UserContext from "./context/UserContext";
 import { getAccessToken, getUserLogged } from "./utils/network-data";
+import DetailPage from "./pages/DetailPage";
 
 function App() {
   const [user, setUser] = useState();
@@ -48,7 +49,7 @@ function App() {
         <>
           <Route path="/" element={<NotesPage />} />
           <Route path="/archives" element={<NotesPage />} />
-          <Route path="/detail/:id" element={<h1>Detail Page</h1>} />
+          <Route path="/detail/:id" element={<DetailPage />} />
         </>
       );
     }
