@@ -3,6 +3,7 @@ import useInputChange from "../hooks/useInputChange";
 import { login, putAccessToken } from "../utils/network-data";
 import InputLabel from "../components/InputLabel";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 function LoginPage({ loginSuccess }) {
   const navigate = useNavigate();
@@ -47,5 +48,9 @@ function LoginPage({ loginSuccess }) {
     </section>
   );
 }
+
+LoginPage.propTypes = {
+  loginSuccess: PropTypes.func.isRequired,
+};
 
 export default LoginPage;
