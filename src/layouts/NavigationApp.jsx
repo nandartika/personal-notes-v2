@@ -5,9 +5,11 @@ import { MdGTranslate as TranslateIcon } from "react-icons/md";
 import { FiMoon as MoonIcon, FiSun as SunIcon } from "react-icons/fi";
 import { RiLoginBoxLine as LogoutIcon } from "react-icons/ri";
 import UserContext from "../context/UserContext";
+import ThemeContext from "../context/ThemeContext";
 
-function NavigationApp({ theme, handleThemeClick }) {
+function NavigationApp() {
   const { onLogout, user } = React.useContext(UserContext);
+  const { toggleTheme, theme } = React.useContext(ThemeContext);
 
   return (
     <header>
@@ -27,7 +29,7 @@ function NavigationApp({ theme, handleThemeClick }) {
         <TranslateIcon />
       </button>
 
-      <button className="toggle-theme" type="button" onClick={handleThemeClick}>
+      <button className="toggle-theme" type="button" onClick={toggleTheme}>
         {theme === "light" ? <MoonIcon /> : <SunIcon />}
       </button>
 
@@ -40,10 +42,5 @@ function NavigationApp({ theme, handleThemeClick }) {
     </header>
   );
 }
-
-NavigationApp.propTypes = {
-  theme: PropTypes.oneOf(["light", "dark"]).isRequired,
-  handleThemeClick: PropTypes.func.isRequired,
-};
 
 export default NavigationApp;
