@@ -59,8 +59,9 @@ function App() {
 
     return (
       <>
-        <Route path="*" element={<LoginPage loginSuccess={onLoginSuccess} />} />
+        <Route path="/" element={<LoginPage loginSuccess={onLoginSuccess} />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="*" element={<LoginPage loginSuccess={onLoginSuccess} />} />
       </>
     );
   };
