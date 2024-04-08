@@ -7,6 +7,7 @@ import NotesPage from "./pages/NotesPage";
 import UserContext from "./context/UserContext";
 import { getAccessToken, getUserLogged } from "./utils/network-data";
 import DetailPage from "./pages/DetailPage";
+import AddPage from "./pages/AddPage";
 
 function App() {
   const [user, setUser] = useState();
@@ -48,15 +49,20 @@ function App() {
       return (
         <>
           <Route path="/" element={<NotesPage />} />
+          <Route path="/add-note" element={<AddPage />} />
           <Route path="/archives" element={<NotesPage />} />
           <Route path="/detail/:id" element={<DetailPage />} />
+          <Route path="*" element={<h1>Halaman tidak ditemukan</h1>} />
         </>
       );
     }
 
     return (
       <>
-        <Route path="/" element={<LoginPage loginSuccess={onLoginSuccess} />} />
+        <Route
+          path="/*"
+          element={<LoginPage loginSuccess={onLoginSuccess} />}
+        />
         <Route path="/register" element={<RegisterPage />} />
       </>
     );
@@ -68,6 +74,7 @@ function App() {
         <Route path="/" element={<MainContainer />}>
           {renderRouting()}
         </Route>
+        <Route path="*" element={<h1>Halaman tidak ditemukan</h1>} />
       </Routes>
     </UserContext.Provider>
   );

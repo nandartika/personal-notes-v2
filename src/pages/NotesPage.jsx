@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getActiveNotes } from "../utils/network-data";
 
 import NotesList from "../components/NotesList";
@@ -9,6 +9,7 @@ import { FiPlus as PlusIcon } from "react-icons/fi";
 
 function NotesPage() {
   const { type } = useParams();
+  const navigate = useNavigate();
   const [notes, setNotes] = useState();
 
   useEffect(() => {
@@ -19,6 +20,10 @@ function NotesPage() {
 
     getNotes();
   }, []);
+
+  const handleAddButtonClick = () => {
+    navigate("/add-note");
+  };
 
   return (
     <section className="homepage">
@@ -31,7 +36,7 @@ function NotesPage() {
       {notes && <NotesList notes={notes} />}
 
       <section className="homepage__action">
-        <FloatButton title="Tambah">
+        <FloatButton title="Tambah" onClick={handleAddButtonClick}>
           <PlusIcon />
         </FloatButton>
       </section>
