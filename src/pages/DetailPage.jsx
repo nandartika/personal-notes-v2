@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { showFormattedDate } from "../utils";
-import { archiveNote, deleteNote, getNote } from "../utils/network-data";
+import {
+  archiveNote,
+  deleteNote,
+  getNote,
+  unarchiveNote,
+} from "../utils/network-data";
 import FloatButton from "../components/FloatButton";
 import {
   MdOutlineArchive as ArchiveIcon,
+  MdOutlineUnarchive as Unarchive,
   MdDeleteOutline as DeleteIcon,
 } from "react-icons/md";
 
@@ -27,18 +33,20 @@ function DetailPage() {
     getNoteAsync();
   }, [id]);
 
-  const handleArchiveClick = async () => {
+  const handleArchiveButtonClick = async () => {
     try {
-      const { error } = await archiveNote(id);
+      const { error } = note?.archived
+        ? await unarchiveNote(id)
+        : await archiveNote(id);
       if (!error) {
-        navigate("/");
+        navigate(0);
       }
     } catch (error) {
       console.error("Error while fetching note:", error);
     }
   };
 
-  const handleDeleteClick = async () => {
+  const handleDeleteButtonClick = async () => {
     try {
       const { error } = await deleteNote(id);
       if (!error) {
@@ -60,10 +68,10 @@ function DetailPage() {
           <div className="detail-page__body">{note?.body}</div>
 
           <div className="detail-page__action">
-            <FloatButton title="Arsipkan" onClick={handleArchiveClick}>
-              <ArchiveIcon />
+            <FloatButton title="Arsipkan" onClick={handleArchiveButtonClick}>
+              {note?.archived ? <Unarchive /> : <ArchiveIcon />}
             </FloatButton>
-            <FloatButton title="Hapus" onClick={handleDeleteClick}>
+            <FloatButton title="Hapus" onClick={handleDeleteButtonClick}>
               <DeleteIcon />
             </FloatButton>
           </div>
