@@ -2,8 +2,10 @@ import React from "react";
 import useInputChange from "../hooks/useInputChange";
 import { login, putAccessToken } from "../utils/network-data";
 import InputLabel from "../components/InputLabel";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage({ loginSuccess }) {
+  const navigate = useNavigate();
   const [email, handleEmailChange] = useInputChange("");
   const [password, handlePasswordChange] = useInputChange("");
 
@@ -11,8 +13,9 @@ function LoginPage({ loginSuccess }) {
     event.preventDefault();
     const { data } = await login({ email, password });
     if (data?.accessToken) {
+      navigate("/");
       putAccessToken(data.accessToken);
-      loginSuccess(data.accessToken)
+      loginSuccess(data.accessToken);
     }
   };
 
