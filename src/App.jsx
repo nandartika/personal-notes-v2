@@ -49,8 +49,8 @@ function App() {
       return (
         <>
           <Route path="/" element={<NotesPage />} />
+          <Route path="/archives" element={<NotesPage type="archived" />} />
           <Route path="/add-note" element={<AddPage />} />
-          <Route path="/archives" element={<NotesPage />} />
           <Route path="/detail/:id" element={<DetailPage />} />
           <Route path="*" element={<h1>Halaman tidak ditemukan</h1>} />
         </>

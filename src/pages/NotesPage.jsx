@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router-dom";
-import { getActiveNotes } from "../utils/network-data";
+import { getActiveNotes, getArchivedNotes } from "../utils/network-data";
 
 import NotesList from "../components/NotesList";
 import Input from "../components/Input";
 import FloatButton from "../components/FloatButton";
 import { FiPlus as PlusIcon } from "react-icons/fi";
 
-function NotesPage() {
-  const { type } = useParams();
+function NotesPage({ type }) {
   const navigate = useNavigate();
   const [notes, setNotes] = useState();
 
+  const isArchived = type === "archived";
+
   useEffect(() => {
     const getNotes = async () => {
-      const { data } = await getActiveNotes();
+      const { data } = isArchived
+        ? await getArchivedNotes()
+        : await getActiveNotes();
       setNotes(data);
     };
 
@@ -27,7 +31,7 @@ function NotesPage() {
 
   return (
     <section className="homepage">
-      <h2>Catatan Active</h2>
+      <h2>Catatan{isArchived ? "Arsip" : "Aktif"}</h2>
 
       <section className="search-bar">
         <Input placeholder="Cari berdasarkan judul ..." />
@@ -43,5 +47,9 @@ function NotesPage() {
     </section>
   );
 }
+
+NotesPage.propTypes = {
+  type: PropTypes.string,
+};
 
 export default NotesPage;
