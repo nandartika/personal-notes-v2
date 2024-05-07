@@ -9,6 +9,7 @@ import DetailPage from "./pages/DetailPage";
 import AddPage from "./pages/AddPage";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthUserActionCreator } from "./states/authUser/action";
+import { asyncReceiveUserLogged } from "./states/user/action";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ function App() {
       const accessToken = getAccessToken();
       if (!!accessToken) {
         dispatch(setAuthUserActionCreator(accessToken));
+        dispatch(asyncReceiveUserLogged());
       }
       setInitializing(true);
     };

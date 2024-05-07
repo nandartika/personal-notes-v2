@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import { MdGTranslate as TranslateIcon } from "react-icons/md";
 import { FiMoon as MoonIcon, FiSun as SunIcon } from "react-icons/fi";
@@ -12,6 +11,7 @@ function NavigationApp() {
   const dispatch = useDispatch();
   const { toggleTheme, theme } = React.useContext(ThemeContext);
   const authUser = useSelector((states) => states.authUser);
+  const user = useSelector((states) => states.user)
 
   const onLogout = () => {
     dispatch(unsetAuthUserActionCreator());
@@ -42,8 +42,7 @@ function NavigationApp() {
       {authUser && (
         <button className="button-logout" type="button" onClick={onLogout}>
           <LogoutIcon />
-          {/* TODO: Change this hardcoded name */}
-          Name User
+          {user?.name}
         </button>
       )}
     </header>
