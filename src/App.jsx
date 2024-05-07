@@ -1,23 +1,25 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import MainContainer from "./layouts/MainContainer";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import NotesPage from "./pages/NotesPage";
-import UserContext from "./context/UserContext";
 import { getAccessToken, getUserLogged } from "./utils/network-data";
 import DetailPage from "./pages/DetailPage";
 import AddPage from "./pages/AddPage";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthUserActionCreator } from "./states/authUser/action";
 
 function App() {
-  const [user, setUser] = useState();
+  const dispatch = useDispatch();
   const [initializing, setInitializing] = useState(false);
+  const authUser = useSelector((states) => states.authUser);
 
   useEffect(() => {
     const isLogin = async () => {
       const accessToken = getAccessToken();
-      if (accessToken) {
-        await onLoginSuccess();
+      if (!!accessToken) {
+        dispatch(setAuthUserActionCreator(accessToken));
       }
       setInitializing(true);
     };
@@ -25,27 +27,12 @@ function App() {
     isLogin();
   }, []);
 
-  const onLoginSuccess = async () => {
-    const { data } = await getUserLogged();
-    setUser(data);
-    return;
-  };
-
-  const onLogout = () => {
-    localStorage.clear();
-    setUser(null);
-  };
-
-  const userContextValue = useMemo(() => {
-    return { onLogout, user };
-  }, [user]);
-
   const renderRouting = () => {
     if (!initializing) {
       return;
     }
 
-    if (user) {
+    if (authUser) {
       return (
         <>
           <Route path="/" element={<NotesPage />} />
@@ -59,22 +46,20 @@ function App() {
 
     return (
       <>
-        <Route path="/" element={<LoginPage loginSuccess={onLoginSuccess} />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="*" element={<LoginPage loginSuccess={onLoginSuccess} />} />
+        <Route path="*" element={<LoginPage />} />
       </>
     );
   };
 
   return (
-    <UserContext.Provider value={userContextValue}>
-      <Routes>
-        <Route path="/" element={<MainContainer />}>
-          {renderRouting()}
-        </Route>
-        <Route path="*" element={<h1>Halaman tidak ditemukan</h1>} />
-      </Routes>
-    </UserContext.Provider>
+    <Routes>
+      <Route path="/" element={<MainContainer />}>
+        {renderRouting()}
+      </Route>
+      <Route path="*" element={<h1>Halaman tidak ditemukan</h1>} />
+    </Routes>
   );
 }
 

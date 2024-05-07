@@ -4,12 +4,18 @@ import PropTypes from "prop-types";
 import { MdGTranslate as TranslateIcon } from "react-icons/md";
 import { FiMoon as MoonIcon, FiSun as SunIcon } from "react-icons/fi";
 import { RiLoginBoxLine as LogoutIcon } from "react-icons/ri";
-import UserContext from "../context/UserContext";
 import ThemeContext from "../context/ThemeContext";
+import { useDispatch, useSelector } from "react-redux";
+import { unsetAuthUserActionCreator } from "../states/authUser/action";
 
 function NavigationApp() {
-  const { onLogout, user } = React.useContext(UserContext);
+  const dispatch = useDispatch();
   const { toggleTheme, theme } = React.useContext(ThemeContext);
+  const authUser = useSelector((states) => states.authUser);
+
+  const onLogout = () => {
+    dispatch(unsetAuthUserActionCreator());
+  };
 
   return (
     <header>
@@ -33,10 +39,11 @@ function NavigationApp() {
         {theme === "light" ? <MoonIcon /> : <SunIcon />}
       </button>
 
-      {user && (
+      {authUser && (
         <button className="button-logout" type="button" onClick={onLogout}>
           <LogoutIcon />
-          {user.name}
+          {/* TODO: Change this hardcoded name */}
+          Name User
         </button>
       )}
     </header>

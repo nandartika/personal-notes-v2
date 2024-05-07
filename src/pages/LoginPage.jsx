@@ -1,23 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useInputChange from "../hooks/useInputChange";
-import { login, putAccessToken } from "../utils/network-data";
 import InputLabel from "../components/InputLabel";
-import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
+import { asyncSetAuthUser } from "../states/authUser/action";
+import { useDispatch, useSelector } from "react-redux";
 
-function LoginPage({ loginSuccess }) {
-  const navigate = useNavigate();
+function LoginPage() {
+  const dispatch = useDispatch();
   const [email, handleEmailChange] = useInputChange("");
   const [password, handlePasswordChange] = useInputChange("");
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    const { data } = await login({ email, password });
-    if (data?.accessToken) {
-      navigate("/");
-      putAccessToken(data.accessToken);
-      loginSuccess(data.accessToken);
-    }
+    dispatch(asyncSetAuthUser({ email, password }));
   };
 
   return (
@@ -48,9 +42,5 @@ function LoginPage({ loginSuccess }) {
     </section>
   );
 }
-
-LoginPage.propTypes = {
-  loginSuccess: PropTypes.func.isRequired,
-};
 
 export default LoginPage;
