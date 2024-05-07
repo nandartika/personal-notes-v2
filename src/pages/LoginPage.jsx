@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import useInputChange from "../hooks/useInputChange";
 import InputLabel from "../components/InputLabel";
-import { asyncSetAuthUser } from "../states/authUser/action";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { asyncSetAuthUser } from "../states/user/action";
 
 function LoginPage() {
   const dispatch = useDispatch();

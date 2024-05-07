@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import MainContainer from "./layouts/MainContainer";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -8,13 +8,15 @@ import { getAccessToken, getUserLogged } from "./utils/network-data";
 import DetailPage from "./pages/DetailPage";
 import AddPage from "./pages/AddPage";
 import { useDispatch, useSelector } from "react-redux";
-import { setAuthUserActionCreator } from "./states/authUser/action";
-import { asyncReceiveUserLogged } from "./states/user/action";
+import {
+  asyncReceiveUserLogged,
+  setAuthUserActionCreator,
+} from "./states/user/action";
 
 function App() {
   const dispatch = useDispatch();
   const [initializing, setInitializing] = useState(false);
-  const authUser = useSelector((states) => states.authUser);
+  const user = useSelector((states) => states.user);
 
   useEffect(() => {
     const isLogin = async () => {
@@ -34,7 +36,7 @@ function App() {
       return;
     }
 
-    if (authUser) {
+    if (user?.accessToken) {
       return (
         <>
           <Route path="/" element={<NotesPage />} />

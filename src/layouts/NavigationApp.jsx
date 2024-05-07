@@ -5,13 +5,12 @@ import { FiMoon as MoonIcon, FiSun as SunIcon } from "react-icons/fi";
 import { RiLoginBoxLine as LogoutIcon } from "react-icons/ri";
 import ThemeContext from "../context/ThemeContext";
 import { useDispatch, useSelector } from "react-redux";
-import { unsetAuthUserActionCreator } from "../states/authUser/action";
+import { unsetAuthUserActionCreator } from "../states/user/action";
 
 function NavigationApp() {
   const dispatch = useDispatch();
   const { toggleTheme, theme } = React.useContext(ThemeContext);
-  const authUser = useSelector((states) => states.authUser);
-  const user = useSelector((states) => states.user)
+  const user = useSelector((states) => states.user);
 
   const onLogout = () => {
     dispatch(unsetAuthUserActionCreator());
@@ -39,7 +38,7 @@ function NavigationApp() {
         {theme === "light" ? <MoonIcon /> : <SunIcon />}
       </button>
 
-      {authUser && (
+      {user?.accessToken && (
         <button className="button-logout" type="button" onClick={onLogout}>
           <LogoutIcon />
           {user?.name}
